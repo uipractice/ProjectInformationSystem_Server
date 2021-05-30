@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const exercisesRouter = require('./routes/exercises');
-const usersRouter = require('./routes/users');
+
+const clientInfoRouter = require('./routes/clientInfo');
+// const exercisesRouter = require('./routes/exercises');
+// const usersRouter = require('./routes/users');
 
 const app = express();
 app.use(cors());
@@ -16,6 +18,7 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => console.log("MongoDB Connection is successful"))
 
-app.use('/exercises', exercisesRouter);
-app.use('/users', usersRouter);
+app.use('/clientInfo', clientInfoRouter);
+// app.use('/exercises', exercisesRouter);
+// app.use('/users', usersRouter);
 
