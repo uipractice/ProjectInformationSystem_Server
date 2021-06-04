@@ -55,4 +55,54 @@ router.route('/add').post(
     }
 )
 
+router.route('/:id').get(
+    (req, res) => 
+        {
+            ClientInfo.findById(req.params.id)
+            .then(clientInfo => res.json(clientInfo))
+            .catch(err => res.status(400).json('Error: ' + err));
+        }
+)
+  
+router.route('/:id').delete(
+    (req, res) => 
+        {
+            ClientInfo.findByIdAndDelete(req.params.id)
+            .then(() => res.json('ClientInfo deleted.'))
+            .catch(err => res.status(400).json('Error: ' + err));
+        }
+)
+  
+router.route('/update/:id').post(
+    (req, res) => {
+        ClientInfo.findById(req.params.id)
+        .then(clientInfo => 
+            {
+                clientInfo.projectName = req.body.projectName;
+                clientInfo.securityMeasure = req.body.securityMeasure;
+                clientInfo.informIT = req.body.informIT;
+                clientInfo.workStationSelected = req.body.workStationSelected;
+                clientInfo.devTypeSelected = req.body.devTypeSelected;
+                clientInfo.allowedWebsite = req.body.allowedWebsite;
+                clientInfo.isNDAsigned = req.body.isNDAsigned;
+                clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
+                clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
+                clientInfo.securityBreach = req.body.securityBreach;
+                clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
+                clientInfo.disasterDetails = req.body.disasterDetails;
+                clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
+                clientInfo.isolationDetails = req.body.isolationDetails;
+                clientInfo.isDLPreq = req.body.isDLPreq;
+                clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+
+                clientInfo.save()
+                    .then(() => res.json('ClientInfo updated!'))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            }
+        )
+        .catch(err => res.status(400).json('Error: ' + err));
+    }
+)
+
+
 module.exports = router
