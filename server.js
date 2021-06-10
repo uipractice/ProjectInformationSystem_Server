@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const clientInfoRouter = require('./routes/clientInfo');
-// const exercisesRouter = require('./routes/exercises');
-// const usersRouter = require('./routes/users');
 
 const app = express();
 app.use(cors());
@@ -19,6 +17,5 @@ mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedT
 mongoose.connection.once('open', () => console.log("MongoDB Connection is successful"))
 
 app.use('/clientInfo', clientInfoRouter);
-// app.use('/exercises', exercisesRouter);
-// app.use('/users', usersRouter);
+
 

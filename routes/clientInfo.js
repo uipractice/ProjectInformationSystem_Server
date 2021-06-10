@@ -11,6 +11,13 @@ router.route('/').get(
 
 router.route('/add').post(
     (req, res) => {
+ 
+        const projectNameByIT = req.body.projectNameByIT;
+        const projectManager = req.body.projectManager;
+        const email = req.body.email;
+        const practice = req.body.practice;
+        const status = req.body.status;
+
         const projectName = req.body.projectName;
         const securityMeasure = req.body.securityMeasure;
         const informIT = req.body.informIT;
@@ -23,29 +30,38 @@ router.route('/add').post(
         const securityBreach = req.body.securityBreach;
         const isDisasterInsuCovered = req.body.isDisasterInsuCovered;
         const disasterDetails = req.body.disasterDetails;
+        const showInsuranceDetails = req.body.showInsuranceDetails;
         const isIsolatedEnvReq = req.body.isIsolatedEnvReq;
         const isolationDetails = req.body.isolationDetails;
+        const showIsolatedDetails = req.body.showIsolatedDetails;
         const isDLPreq = req.body.isDLPreq;
         const isClientEmailProvided = req.body.isClientEmailProvided;
 
-        const newClientInfo = new ClientInfo ({
-            projectName,
-            securityMeasure,
-            informIT,
-            workStationSelected,
-            devTypeSelected,
-            allowedWebsite,
-            isNDAsigned,
-            isGDPRcompliance,
-            isCyberSecConducted,
-            securityBreach,
-            isDisasterInsuCovered,
-            disasterDetails,
-            isIsolatedEnvReq,
-            isolationDetails,
-            isDLPreq,
-            isClientEmailProvided
+        const newClientInfo = new ClientInfo({
+          projectNameByIT,
+          projectManager,
+          email,
+          practice,
+          status,
 
+          projectName,
+          securityMeasure,
+          informIT,
+          workStationSelected,
+          devTypeSelected,
+          allowedWebsite,
+          isNDAsigned,
+          isGDPRcompliance,
+          isCyberSecConducted,
+          securityBreach,
+          isDisasterInsuCovered,
+          disasterDetails,
+          showInsuranceDetails,
+          isIsolatedEnvReq,
+          isolationDetails,
+          showIsolatedDetails,
+          isDLPreq,
+          isClientEmailProvided,
         });
 
         newClientInfo.save()

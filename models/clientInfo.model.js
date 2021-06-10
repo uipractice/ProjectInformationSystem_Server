@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const clientInfoSchema = new Schema(
     {
+        projectNameByIT: { type: String },
+        projectManager: { type: String },
+        email: { type: String },
+        practice: { type: String },
+        status: { type: String },
+
         projectName: { type: String },
         securityMeasure: { type: String },
         informIT: { type: String},
@@ -14,10 +20,12 @@ const clientInfoSchema = new Schema(
         securityBreach: { type: String },
         isDisasterInsuCovered: { type: String},
             disasterDetails: { type: String },
+            showInsuranceDetails: { type: String },
         isIsolatedEnvReq: { type: String }, 
             isolationDetails: { type: String },
+            showIsolatedDetails: { type: String },
         isDLPreq: { type: String },
-        isClientEmailProvided: { type: String }
+        isClientEmailProvided: { type: String },
     }, 
     
     {  timestamps: true }
