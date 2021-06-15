@@ -81,23 +81,31 @@ router.route("/:id").delete((req, res) => {
 router.route("/update/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
-      clientInfo.projectName = req.body.projectName;
-      clientInfo.securityMeasure = req.body.securityMeasure;
-      clientInfo.informIT = req.body.informIT;
-      clientInfo.workStationSelected = req.body.workStationSelected;
-      clientInfo.devTypeSelected = req.body.devTypeSelected;
-      clientInfo.allowedWebsite = req.body.allowedWebsite;
-      clientInfo.isNDAsigned = req.body.isNDAsigned;
-      clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
-      clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
-      clientInfo.securityBreach = req.body.securityBreach;
-      clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
-      clientInfo.disasterDetails = req.body.disasterDetails;
-      clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
-      clientInfo.isolationDetails = req.body.isolationDetails;
-      clientInfo.isDLPreq = req.body.isDLPreq;
-      clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+      // clientInfo.projectNameByIT = req.body.projectNameByIT;
+      // clientInfo.projectManager = req.body.projectManager;
+      // clientInfo.email = req.body.email;
+      // clientInfo.practice = req.body.practice;
+      clientInfo.status = req.body.status;
 
+      // clientInfo.projectName = req.body.projectName;
+      // clientInfo.securityMeasure = req.body.securityMeasure;
+      // clientInfo.informIT = req.body.informIT;
+      // clientInfo.workStationSelected = req.body.workStationSelected;
+      // clientInfo.devTypeSelected = req.body.devTypeSelected;
+      // clientInfo.allowedWebsite = req.body.allowedWebsite;
+      // clientInfo.isNDAsigned = req.body.isNDAsigned;
+      // clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
+      // clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
+      // clientInfo.securityBreach = req.body.securityBreach;
+      // clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
+      // clientInfo.disasterDetails = req.body.disasterDetails;
+      // clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
+      // clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
+      // clientInfo.isolationDetails = req.body.isolationDetails;
+      // clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
+      // clientInfo.isDLPreq = req.body.isDLPreq;
+      // clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+    
       clientInfo
         .save()
         .then(() => res.json("ClientInfo updated!"))
@@ -106,19 +114,6 @@ router.route("/update/:id").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// router.route('/count').get(
-//     (req, res) => {
-//     let result = {
-//         totalCount: ClientInfo.countDocuments({}),
-//         pendingCount: ClientInfo.countDocuments({ status: "Pending"})
-//     };
-//     res.json(result);
-//    });
 
-// working
-// var number = ClientInfo.countDocuments({status: "Pending"}, function(err, count) {
-//     console.log(count);
-// });
-// console.log(number)
 
 module.exports = router;
