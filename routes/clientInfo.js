@@ -1,6 +1,38 @@
 const router = require("express").Router();
 let ClientInfo = require("../models/clientInfo.model");
 
+const { sendEmail } = require("../mail");
+
+router.route("/email").post((req, res) => {
+  const projectNameByIT = req.body.projectNameByIT;
+  const projectManager = req.body.projectManager;
+  const email = req.body.email;
+  const practice = req.body.practice;
+  const status = req.body.status;
+
+  const newClientInfo = new ClientInfo({
+    projectNameByIT,
+    projectManager,
+    email,
+    practice,
+    status,
+  });
+
+  newClientInfo
+    .save()
+    .then((row) => {
+      res.json("ClientInfo added and the ID assigned" + row._id);
+      sendEmail(
+        email,
+        projectManager,
+        projectNameByIT,
+        // req.body.message,
+        row._id
+      );
+    })
+    .catch((err) => res.status(400).json("Error in saving the form to mongodb : " + err));
+});
+
 router.route("/").get((req, res) => {
   ClientInfo.find()
     .then((clientInfo) => res.json(clientInfo))
