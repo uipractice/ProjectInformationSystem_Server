@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let ClientInfo = require("../models/clientInfo.model");
+const log = console.log;
 
 const { sendEmail } = require("../mail");
 
@@ -20,8 +21,8 @@ router.route("/email").post((req, res) => {
 
   newClientInfo
     .save()
-    .then((row) => {
-      res.json("ClientInfo added and the ID assigned" + row._id);
+    .then((row) => {   
+      res.json("success");  
       sendEmail(
         email,
         projectManager,
@@ -29,8 +30,15 @@ router.route("/email").post((req, res) => {
         // req.body.message,
         row._id
       );
+      log("Form saved to mongo with the ID : " + row._id);
     })
-    .catch((err) => res.status(400).json("Error in saving the form to mongodb : " + err));
+    .catch((err) => {
+      res.json({
+        status: "fail",
+      });
+      log("Error in saving the form to mongodb : " + err)
+    });
+    
 });
 
 router.route("/").get((req, res) => {

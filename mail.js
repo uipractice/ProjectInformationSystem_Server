@@ -40,9 +40,15 @@ const sendEmail = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
+      res.json({
+        status: "failed to send the mail",
+      });
       log("Error occured in sending the mail : " + err);
     } else {
-      log("Mail sent successfully");
+      res.json({
+        status: "success",
+      });
+      log("Mail sent successfully" + info);
     }
   });
 };
