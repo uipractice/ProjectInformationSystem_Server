@@ -68,13 +68,13 @@ router.route("/email").post((req, res) => {
         // req.body.message,
         row._id
       );
-      log("Form saved to mongo with the ID : " + row._id);
+      log("Form saved to mongo with the ID : ", row._id);
     })
     .catch((err) => {
       res.json({
         status: "fail",
       });
-      log("Error in saving the form to mongodb : " + err)
+      log("Error in saving the form to mongodb : ", err)
     });
     
 });

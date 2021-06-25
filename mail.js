@@ -3,6 +3,7 @@ const log = console.log;
 
 const sendEmail = (email, projectManager, projectNameByIT, mongoID) => {
   //Step 1:
+  log("inside step 1");
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -39,16 +40,17 @@ const sendEmail = (email, projectManager, projectNameByIT, mongoID) => {
 
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
+    log("inside step 3");
     if (err) {
-      res.json({
-        status: "failed to send the mail",
-      });
-      log("Error occured in sending the mail : " + err);
+      // res.json({
+      //   status: "failed to send the mail",
+      // });
+      log("Error occured in sending the mail : ", err);
     } else {
-      res.json({
-        status: "success",
-      });
-      log("Mail sent successfully" + info);
+      // res.json({
+      //   status: "success",
+      // });
+      log("Mail sent successfully", info);
     }
   });
 };
