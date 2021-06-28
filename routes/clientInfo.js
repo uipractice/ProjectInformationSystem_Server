@@ -68,13 +68,13 @@ router.route("/email").post((req, res) => {
         // req.body.message,
         row._id
       );
-      log("Form saved to mongo with the ID : " + row._id);
+      log("Form saved to mongo with the ID : ", row._id);
     })
     .catch((err) => {
       res.json({
         status: "fail",
       });
-      log("Error in saving the form to mongodb : " + err)
+      log("Error in saving the form to mongodb : ", err)
     });
     
 });
@@ -150,11 +150,11 @@ router.route("/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id").delete((req, res) => {
-  ClientInfo.findByIdAndDelete(req.params.id)
-    .then(() => res.json("ClientInfo deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+// router.route("/:id").delete((req, res) => {
+//   ClientInfo.findByIdAndDelete(req.params.id)
+//     .then(() => res.json("ClientInfo deleted."))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
 
 router.route("/update/:id").post((req, res) => {
   ClientInfo.findByIdAndUpdate(req.params.id)
@@ -188,13 +188,25 @@ router.route("/update/:id").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/delete/:id").post((req, res) => {
+router.route("/deleteStatus/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
       clientInfo.status = req.body.status;
       clientInfo
         .save()
-        .then(() => res.json("ClientInfo status updated to Deleted!"))
+        .then(() => res.json("Status is updated to Deleted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/approvStatus/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Approved!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
