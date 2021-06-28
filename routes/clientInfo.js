@@ -10,6 +10,7 @@ router.route("/email").post((req, res) => {
   const email = req.body.email;
   const practice = req.body.practice;
   const status = req.body.status;
+  const deleteReason = "";
 
   const projectName = "";
   const securityMeasure = "";
@@ -36,6 +37,7 @@ router.route("/email").post((req, res) => {
     email,
     practice,
     status,
+    deleteReason,
 
     projectName,
     securityMeasure,
@@ -179,6 +181,8 @@ router.route("/update/:id").post((req, res) => {
       clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
       clientInfo.isDLPreq = req.body.isDLPreq;
       clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+      
+    
 
       clientInfo
         .save()
@@ -191,6 +195,7 @@ router.route("/update/:id").post((req, res) => {
 router.route("/deleteStatus/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
+      clientInfo.deleteReason = req.body.deleteReason;
       clientInfo.status = req.body.status;
       clientInfo
         .save()

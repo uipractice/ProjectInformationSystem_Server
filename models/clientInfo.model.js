@@ -26,6 +26,7 @@ const clientInfoSchema = new Schema(
             showIsolatedDetails: { type: String },
         isDLPreq: { type: String },
         isClientEmailProvided: { type: String },
+        deleteReason: { type: String },
     }, 
     
     {  timestamps: true }
