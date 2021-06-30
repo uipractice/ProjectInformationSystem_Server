@@ -82,7 +82,9 @@ router.route("/email").post((req, res) => {
 });
 
 router.route("/").get((req, res) => {
-  ClientInfo.find()
+  ClientInfo.find().sort({
+    createdAt: -1,
+  })
     .then((clientInfo) => res.json(clientInfo))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -182,7 +184,6 @@ router.route("/update/:id").post((req, res) => {
       clientInfo.isDLPreq = req.body.isDLPreq;
       clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
       
-    
 
       clientInfo
         .save()
