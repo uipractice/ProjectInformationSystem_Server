@@ -3,6 +3,8 @@ let ClientInfo = require("../models/clientInfo.model");
 const log = console.log;
 
 const { sendEmail } = require("../mail");
+const { mailReshare } = require("../mailReshare");
+const { mailReminder } = require("../mailReminder");
 
 router.route("/email").post((req, res) => {
   const projectNameByIT = req.body.projectNameByIT;
@@ -11,25 +13,27 @@ router.route("/email").post((req, res) => {
   const practice = req.body.practice;
   const status = req.body.status;
   const deleteReason = "";
+  const restoreReason = "";
+  const reshareReason = "";
 
-  const projectName = "";
-  const securityMeasure = "";
-  const informIT = "";
-  const workStationSelected = "";
-  const devTypeSelected = "";
-  const allowedWebsite = "";
-  const isNDAsigned = "";
-  const isGDPRcompliance = "";
-  const isCyberSecConducted = "";
-  const securityBreach = "";
-  const isDisasterInsuCovered = "";
-  const disasterDetails = "";
-  const showInsuranceDetails = "";
-  const isIsolatedEnvReq = "";
-  const isolationDetails = "";
-  const showIsolatedDetails = "";
-  const isDLPreq = "";
-  const isClientEmailProvided = "";
+  // const projectName = "";
+  // const securityMeasure = "";
+  // const informIT = "";
+  // const workStationSelected = "";
+  // const devTypeSelected = "";
+  // const allowedWebsite = "";
+  // const isNDAsigned = "";
+  // const isGDPRcompliance = "";
+  // const isCyberSecConducted = "";
+  // const securityBreach = "";
+  // const isDisasterInsuCovered = "";
+  // const disasterDetails = "";
+  // const showInsuranceDetails = "";
+  // const isIsolatedEnvReq = "";
+  // const isolationDetails = "";
+  // const showIsolatedDetails = "";
+  // const isDLPreq = "";
+  // const isClientEmailProvided = "";
 
   const newClientInfo = new ClientInfo({
     projectNameByIT,
@@ -38,25 +42,27 @@ router.route("/email").post((req, res) => {
     practice,
     status,
     deleteReason,
+    restoreReason,
+    reshareReason,
 
-    projectName,
-    securityMeasure,
-    informIT,
-    workStationSelected,
-    devTypeSelected,
-    allowedWebsite,
-    isNDAsigned,
-    isGDPRcompliance,
-    isCyberSecConducted,
-    securityBreach,
-    isDisasterInsuCovered,
-    disasterDetails,
-    showInsuranceDetails,
-    isIsolatedEnvReq,
-    isolationDetails,
-    showIsolatedDetails,
-    isDLPreq,
-    isClientEmailProvided,
+    // projectName,
+    // securityMeasure,
+    // informIT,
+    // workStationSelected,
+    // devTypeSelected,
+    // allowedWebsite,
+    // isNDAsigned,
+    // isGDPRcompliance,
+    // isCyberSecConducted,
+    // securityBreach,
+    // isDisasterInsuCovered,
+    // disasterDetails,
+    // showInsuranceDetails,
+    // isIsolatedEnvReq,
+    // isolationDetails,
+    // showIsolatedDetails,
+    // isDLPreq,
+    // isClientEmailProvided,
   });
 
   newClientInfo
@@ -70,7 +76,7 @@ router.route("/email").post((req, res) => {
         // req.body.message,
         row._id
       );
-      log("Form saved to mongo with the ID : ", row._id);
+      // log("Form saved to mongo with the ID : ", row._id);
     })
     .catch((err) => {
       res.json({
@@ -81,8 +87,56 @@ router.route("/email").post((req, res) => {
     
 });
 
+router.route("/mailReshare/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;  //pending
+      // clientInfo.email = req.body.email; 
+      // clientInfo.reshareReason = req.body.reshareReason;  //display in the email
+      log(req.body.email);
+      clientInfo
+        .save()
+        .then((savedDocument) => {
+          res.json("Project is Reshared & Status is updated to Pending!");
+          mailReshare(
+                    savedDocument.email,
+                    savedDocument.projectManager,
+                    savedDocument.projectNameByIT,
+                    // req.body.message,
+                    savedDocument._id
+                  );
+        })
+        .catch((err) => res.status(400).json("Error dp: " + err));
+    })
+    .catch((err) => res.status(400).json("Error dp2: " + err));
+    
+});
+
+router.route("/mailReminder/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      log(req.body.email);
+      clientInfo
+        .save()
+        .then((savedDocument) => {
+          res.json("Sending reminder mail !");
+          mailReminder(
+                    savedDocument.email,
+                    savedDocument.projectManager,
+                    savedDocument.projectNameByIT,
+                    savedDocument._id
+                  );
+        })
+        .catch((err) => res.status(400).json("Error dp: " + err));
+    })
+    .catch((err) => res.status(400).json("Error dp2: " + err));
+    
+});
+
 router.route("/").get((req, res) => {
-  ClientInfo.find()
+  ClientInfo.find().sort({
+    createdAt: -1,
+  })
     .then((clientInfo) => res.json(clientInfo))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -182,7 +236,6 @@ router.route("/update/:id").post((req, res) => {
       clientInfo.isDLPreq = req.body.isDLPreq;
       clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
       
-    
 
       clientInfo
         .save()

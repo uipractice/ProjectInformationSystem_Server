@@ -27,6 +27,8 @@ const clientInfoSchema = new Schema(
         isDLPreq: { type: String },
         isClientEmailProvided: { type: String },
         deleteReason: { type: String },
+        restoreReason: { type: String },
+        reshareReason: { type: String },
     }, 
     
     {  timestamps: true }
