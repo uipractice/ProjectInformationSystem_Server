@@ -92,16 +92,17 @@ router.route("/mailReshare/:id").post((req, res) => {
     .then((clientInfo) => {
       clientInfo.status = req.body.status;  //pending
       // clientInfo.email = req.body.email; 
-      // clientInfo.reshareReason = req.body.reshareReason;  //display in the email
+      clientInfo.reshareReason = req.body.reshareReason;  //display in the email
       log(req.body.email);
       clientInfo
         .save()
         .then((savedDocument) => {
           res.json("Project is Reshared & Status is updated to Pending!");
-          mailReshare(
+          mailReshare( 
                     savedDocument.email,
                     savedDocument.projectManager,
                     savedDocument.projectNameByIT,
+                    savedDocument.reshareReason,
                     // req.body.message,
                     savedDocument._id
                   );
