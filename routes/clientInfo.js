@@ -259,6 +259,18 @@ router.route("/deleteStatus/:id").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/restoreProject/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Submitted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 router.route("/approvStatus/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
