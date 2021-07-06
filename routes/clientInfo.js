@@ -92,16 +92,17 @@ router.route("/mailReshare/:id").post((req, res) => {
     .then((clientInfo) => {
       clientInfo.status = req.body.status;  //pending
       // clientInfo.email = req.body.email; 
-      // clientInfo.reshareReason = req.body.reshareReason;  //display in the email
+      clientInfo.reshareReason = req.body.reshareReason;  //display in the email
       log(req.body.email);
       clientInfo
         .save()
         .then((savedDocument) => {
           res.json("Project is Reshared & Status is updated to Pending!");
-          mailReshare(
+          mailReshare( 
                     savedDocument.email,
                     savedDocument.projectManager,
                     savedDocument.projectNameByIT,
+                    savedDocument.reshareReason,
                     // req.body.message,
                     savedDocument._id
                   );
@@ -253,6 +254,18 @@ router.route("/deleteStatus/:id").post((req, res) => {
       clientInfo
         .save()
         .then(() => res.json("Status is updated to Deleted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/restoreProject/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Submitted!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));

@@ -10,10 +10,10 @@ const sendEmail = (email, projectManager, projectNameByIT, mongoID) => {
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-      // user: process.env.SMTP_USER,
-      user: "YOUR GMAIL ID",
-      // pass: process.env.SMTP_PASS,
-      pass: "YOUR GMAIL PASSWORD",
+     // user: process.env.SMTP_USER,
+     user: "deepakumar.dx@gmail.com",
+     // pass: process.env.SMTP_PASS,
+     pass: "GoogleBaba@8",
     },
     tls: {
       rejectUnauthorized: false,

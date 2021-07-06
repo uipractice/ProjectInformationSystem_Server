@@ -10,9 +10,9 @@ const mailReminder = (email, projectManager, projectNameByIT, mongoID) => {
     secure: process.env.SMTP_SECURE,
     auth: {
       // user: process.env.SMTP_USER,
-      user: "YOUR GMAIL ID",
+      user: "deepakumar.dx@gmail.com",
       // pass: process.env.SMTP_PASS,
-      pass: "YOUR GMAIL PASSWORD",
+      pass: "GoogleBaba@8",
     },
     tls: {
       rejectUnauthorized: false,
