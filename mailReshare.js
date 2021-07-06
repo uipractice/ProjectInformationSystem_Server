@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const log = console.log;
 
-const mailReshare = (email, projectManager, projectNameByIT, mongoID) => {
+const mailReshare = (email, projectManager, projectNameByIT, reshareReason, mongoID) => {
   //Step 1:
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -10,9 +10,9 @@ const mailReshare = (email, projectManager, projectNameByIT, mongoID) => {
     secure: process.env.SMTP_SECURE,
     auth: {
       // user: process.env.SMTP_USER,
-      user: "YOUR GMAIL ID",
+      user: "deepakumar.dx@gmail.com",
       // pass: process.env.SMTP_PASS,
-      pass: "YOUR GMAIL PASSWORD",
+      pass: "GoogleBaba@8",
     },
     tls: {
       rejectUnauthorized: false,
@@ -27,11 +27,11 @@ const mailReshare = (email, projectManager, projectNameByIT, mongoID) => {
     // cc: "thedipakkumaryadav@gmail.com",
     // bcc: "deepakumar.dx@gmail.com",
     subject: `"Request to re-share the details of ${projectNameByIT} project."`,
-    html: ` <p> <b> Dear ${projectManager} </b> </p>
+    html: "Email body "` <p> <b> Dear ${projectManager} </b> </p>
             
-            <p> Hope you are doing well. </p>
              You are request to fill the details of <b> ${projectNameByIT} </b> project AGAIN
              by clicking <a href = "http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"> <b> here. </b> </a>
+             <p>The reason you need to resubmit the detials is because: <b> ${reshareReason} </b> </p>
             <p>Note: All fields are mendatory, if you are not sure about some detials then mention "NOT SURE" or "NOT APPLICABLE".</P>
              <br></br>
             <p> Warm Regards, <br>

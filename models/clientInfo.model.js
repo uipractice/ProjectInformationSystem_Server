@@ -7,7 +7,6 @@ const clientInfoSchema = new Schema(
         email: { type: String },
         practice: { type: String },
         status: { type: String },
-
         projectName: { type: String },
         securityMeasure: { type: String },
         informIT: { type: String},
