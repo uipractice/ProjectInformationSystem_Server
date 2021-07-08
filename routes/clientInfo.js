@@ -5,6 +5,7 @@ const log = console.log;
 const { sendEmail } = require("../mail");
 const { mailReshare } = require("../mailReshare");
 const { mailReminder } = require("../mailReminder");
+const { mailAndUpdate } = require("../mailAndUpdate");
 
 router.route("/email").post((req, res) => {
   const projectNameByIT = req.body.projectNameByIT;
@@ -16,25 +17,6 @@ router.route("/email").post((req, res) => {
   const restoreReason = "";
   const reshareReason = "";
 
-  // const projectName = "";
-  // const securityMeasure = "";
-  // const informIT = "";
-  // const workStationSelected = "";
-  // const devTypeSelected = "";
-  // const allowedWebsite = "";
-  // const isNDAsigned = "";
-  // const isGDPRcompliance = "";
-  // const isCyberSecConducted = "";
-  // const securityBreach = "";
-  // const isDisasterInsuCovered = "";
-  // const disasterDetails = "";
-  // const showInsuranceDetails = "";
-  // const isIsolatedEnvReq = "";
-  // const isolationDetails = "";
-  // const showIsolatedDetails = "";
-  // const isDLPreq = "";
-  // const isClientEmailProvided = "";
-
   const newClientInfo = new ClientInfo({
     projectNameByIT,
     projectManager,
@@ -45,24 +27,6 @@ router.route("/email").post((req, res) => {
     restoreReason,
     reshareReason,
 
-    // projectName,
-    // securityMeasure,
-    // informIT,
-    // workStationSelected,
-    // devTypeSelected,
-    // allowedWebsite,
-    // isNDAsigned,
-    // isGDPRcompliance,
-    // isCyberSecConducted,
-    // securityBreach,
-    // isDisasterInsuCovered,
-    // disasterDetails,
-    // showInsuranceDetails,
-    // isIsolatedEnvReq,
-    // isolationDetails,
-    // showIsolatedDetails,
-    // isDLPreq,
-    // isClientEmailProvided,
   });
 
   newClientInfo
@@ -132,6 +96,47 @@ router.route("/mailReminder/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error dp2: " + err));
     
+});
+
+router.route("/mailAndUpdate/:id").post((req, res) => {
+  ClientInfo.findByIdAndUpdate(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.projectNameByIT = req.body.projectName; 
+      clientInfo.status = req.body.newStatus; 
+      //above two are getting updated, below is getting added and email, practice being undisturbed.
+      clientInfo.securityMeasure = req.body.securityMeasure;
+      clientInfo.informIT = req.body.informIT;
+      clientInfo.workStationSelected = req.body.workStationSelected;
+      clientInfo.devTypeSelected = req.body.devTypeSelected;
+      clientInfo.allowedWebsite = req.body.allowedWebsite;
+      clientInfo.isNDAsigned = req.body.isNDAsigned;
+      clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
+      clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
+      clientInfo.securityBreach = req.body.securityBreach;
+      clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
+      clientInfo.disasterDetails = req.body.disasterDetails;
+      clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
+      clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
+      clientInfo.isolationDetails = req.body.isolationDetails;
+      clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
+      clientInfo.isDLPreq = req.body.isDLPreq;
+      clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+      
+      clientInfo
+        .save()
+        .then((savedDocument) => {
+          res.json("Informing IT team that clientInfo is updated!");
+          //import email method call
+          mailAndUpdate(
+                    savedDocument.email,
+                    savedDocument.projectManager,
+                    savedDocument.projectNameByIT,
+                    savedDocument._id
+                  );
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/").get((req, res) => {
@@ -213,38 +218,7 @@ router.route("/:id").get((req, res) => {
 //     .catch((err) => res.status(400).json("Error: " + err));
 // });
 
-router.route("/update/:id").post((req, res) => {
-  ClientInfo.findByIdAndUpdate(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.projectNameByIT = req.body.projectName; 
-      clientInfo.status = req.body.newStatus; 
-      //above two are getting updated, below is getting added and email, practice being undisturbed.
-      clientInfo.securityMeasure = req.body.securityMeasure;
-      clientInfo.informIT = req.body.informIT;
-      clientInfo.workStationSelected = req.body.workStationSelected;
-      clientInfo.devTypeSelected = req.body.devTypeSelected;
-      clientInfo.allowedWebsite = req.body.allowedWebsite;
-      clientInfo.isNDAsigned = req.body.isNDAsigned;
-      clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
-      clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
-      clientInfo.securityBreach = req.body.securityBreach;
-      clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
-      clientInfo.disasterDetails = req.body.disasterDetails;
-      clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
-      clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
-      clientInfo.isolationDetails = req.body.isolationDetails;
-      clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
-      clientInfo.isDLPreq = req.body.isDLPreq;
-      clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
-      
 
-      clientInfo
-        .save()
-        .then(() => res.json("ClientInfo updated!"))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
 
 router.route("/deleteStatus/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
