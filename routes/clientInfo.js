@@ -139,6 +139,39 @@ router.route("/mailAndUpdate/:id").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/editAndUpdate/:id").post((req, res) => {
+  ClientInfo.findByIdAndUpdate(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.projectNameByIT = req.body.projectNameByIT; 
+      clientInfo.status = req.body.status; 
+      clientInfo.securityMeasure = req.body.securityMeasure;
+      clientInfo.informIT = req.body.informIT;
+      clientInfo.workStationSelected = req.body.workStationValue;
+      clientInfo.devTypeSelected = req.body.devTypeValue;
+      clientInfo.allowedWebsite = req.body.allowedWebsite;
+      clientInfo.isNDAsigned = req.body.NDAsigned;
+      clientInfo.isGDPRcompliance = req.body.GDPRcompliance;
+      clientInfo.isCyberSecConducted = req.body.CyberSecConducted;
+      clientInfo.securityBreach = req.body.securityBreach;
+      clientInfo.isDisasterInsuCovered = req.body.DisasterInsuCovered;
+      clientInfo.disasterDetails = req.body.disasterDetails;
+      clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
+      clientInfo.isIsolatedEnvReq = req.body.IsolatedEnvReq;
+      clientInfo.isolationDetails = req.body.isolationDetails;
+      clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
+      clientInfo.isDLPreq = req.body.DLPreq;
+      clientInfo.isClientEmailProvided = req.body.ClientEmailProvided;
+      
+      clientInfo
+        .save()
+        .then((res) => {
+          log("Successfully edited and updated the values..!" + res);
+        })
+        .catch((err) => res.status(400).json("Error in saving EditAndUpdate API : " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 router.route("/").get((req, res) => {
   ClientInfo.find().sort({
     createdAt: -1,
@@ -146,6 +179,15 @@ router.route("/").get((req, res) => {
     .then((clientInfo) => res.json(clientInfo))
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+// We can create multiple routes for filter option.
+// router.route("/").get((req, res) => {
+//   ClientInfo.find().sort({
+//     createdAt: -1,
+//   })
+//     .then((clientInfo) => res.json(clientInfo))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
 
 router.route("/add").post((req, res) => {
   const projectNameByIT = req.body.projectNameByIT;
