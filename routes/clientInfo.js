@@ -180,15 +180,6 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// We can create multiple routes for filter option.
-// router.route("/").get((req, res) => {
-//   ClientInfo.find().sort({
-//     createdAt: -1,
-//   })
-//     .then((clientInfo) => res.json(clientInfo))
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
-
 router.route("/add").post((req, res) => {
   const projectNameByIT = req.body.projectNameByIT;
   const projectManager = req.body.projectManager;
@@ -254,14 +245,6 @@ router.route("/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// router.route("/:id").delete((req, res) => {
-//   ClientInfo.findByIdAndDelete(req.params.id)
-//     .then(() => res.json("ClientInfo deleted."))
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
-
-
-
 router.route("/deleteStatus/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
@@ -310,5 +293,22 @@ router.route("/submit/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+{
+// router.route("/:id").delete((req, res) => {
+//   ClientInfo.findByIdAndDelete(req.params.id)
+//     .then(() => res.json("ClientInfo deleted."))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
+
+// We can create multiple routes for filter option.
+// router.route("/").get((req, res) => {
+//   ClientInfo.find().sort({
+//     createdAt: -1,
+//   })
+//     .then((clientInfo) => res.json(clientInfo))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
+}
 
 module.exports = router;
