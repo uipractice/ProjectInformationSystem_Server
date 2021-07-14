@@ -165,11 +165,11 @@ router.route("/editAndUpdate/:id").post((req, res) => {
       clientInfo
         .save()
         .then((res) => {
-          log("Successfully edited and updated the values..!" + res);
+          log("successfully Edited" );
         })
         .catch((err) => res.status(400).json("Error in saving EditAndUpdate API : " + err));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Backend error: " + err));
 });
 
 router.route("/").get((req, res) => {
