@@ -21,7 +21,7 @@ const fileStorageEngine = multer.diskStorage({
 });
 
 const upload = multer({ storage:fileStorageEngine });
-app.post("/multiple", upload.array('fileNameInputFeild', 10), (req, res) => {
+app.post("/multiple", upload.array('fileData', 10), (req, res) => {
   log(req.files);
   res.send("Multiple files upload is successful");
 })

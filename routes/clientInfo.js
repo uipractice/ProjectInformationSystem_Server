@@ -101,8 +101,8 @@ router.route("/mailReminder/:id").post((req, res) => {
 router.route("/mailAndUpdate/:id").post((req, res) => {
   ClientInfo.findByIdAndUpdate(req.params.id)
     .then((clientInfo) => {
-      clientInfo.projectNameByIT = req.body.projectName; 
-      clientInfo.status = req.body.newStatus; 
+      clientInfo.projectNameByIT = req.body.preProjectNameByIT; 
+      clientInfo.status = "Submitted"; 
       //above two are getting updated, below is getting added and email, practice being undisturbed.
       clientInfo.securityMeasure = req.body.securityMeasure;
       clientInfo.informIT = req.body.informIT;
@@ -181,6 +181,7 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/add").post((req, res) => {
+  //not in use
   const projectNameByIT = req.body.projectNameByIT;
   const projectManager = req.body.projectManager;
   const email = req.body.email;
@@ -257,6 +258,8 @@ router.route("/deleteStatus/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+
 
 router.route("/restoreProject/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
