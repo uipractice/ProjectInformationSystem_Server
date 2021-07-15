@@ -2,10 +2,78 @@ const router = require("express").Router();
 let ClientInfo = require("../models/clientInfo.model");
 const log = console.log;
 
-const { sendEmail } = require("../mail");
-const { mailReshare } = require("../mailReshare");
-const { mailReminder } = require("../mailReminder");
-const { mailAndUpdate } = require("../mailAndUpdate");
+const { shareForm } = require("../mails/shareForm");
+const { reShareForm } = require("../mails/reShareForm");
+const { reminderMail } = require("../mails/reminderMail");
+const { formSubmitted } = require("../mails/formSubmitted");
+
+// const { sendEmail } = require("../mail");
+// const { mailReshare } = require("../mailReshare");
+// const { mailReminder } = require("../mailReminder");
+// const { mailAndUpdate } = require("../mailAndUpdate");
+
+router.route("/").get((req, res) => {
+  ClientInfo.find().sort({
+    createdAt: -1,
+  })
+    .then((clientInfo) => res.json(clientInfo))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/:id").get((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => res.json(clientInfo))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/deleteStatus/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.deleteReason = req.body.deleteReason;
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Deleted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/restoreProject/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Submitted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/approvStatus/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("Status is updated to Approved!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/submit/:id").post((req, res) => {
+  ClientInfo.findById(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.status = req.body.status;
+      clientInfo
+        .save()
+        .then(() => res.json("ClientInfo Status updated to Submitted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
 
 router.route("/email").post((req, res) => {
   const projectNameByIT = req.body.projectNameByIT;
@@ -33,14 +101,12 @@ router.route("/email").post((req, res) => {
     .save()
     .then((row) => {   
       res.json("success");  
-      sendEmail(
+      shareForm(
         email,
         projectManager,
         projectNameByIT,
-        // req.body.message,
         row._id
       );
-      // log("Form saved to mongo with the ID : ", row._id);
     })
     .catch((err) => {
       res.json({
@@ -55,19 +121,17 @@ router.route("/mailReshare/:id").post((req, res) => {
   ClientInfo.findById(req.params.id)
     .then((clientInfo) => {
       clientInfo.status = req.body.status;  //pending
-      // clientInfo.email = req.body.email; 
       clientInfo.reshareReason = req.body.reshareReason;  //display in the email
-      log(req.body.email);
+
       clientInfo
         .save()
         .then((savedDocument) => {
           res.json("Project is Reshared & Status is updated to Pending!");
-          mailReshare( 
+          reShareForm( 
                     savedDocument.email,
                     savedDocument.projectManager,
                     savedDocument.projectNameByIT,
                     savedDocument.reshareReason,
-                    // req.body.message,
                     savedDocument._id
                   );
         })
@@ -85,7 +149,7 @@ router.route("/mailReminder/:id").post((req, res) => {
         .save()
         .then((savedDocument) => {
           res.json("Sending reminder mail !");
-          mailReminder(
+          reminderMail(
                     savedDocument.email,
                     savedDocument.projectManager,
                     savedDocument.projectNameByIT,
@@ -126,8 +190,7 @@ router.route("/mailAndUpdate/:id").post((req, res) => {
         .save()
         .then((savedDocument) => {
           res.json("Informing IT team that clientInfo is updated!");
-          //import email method call
-          mailAndUpdate(
+          formSubmitted(
                     savedDocument.email,
                     savedDocument.projectManager,
                     savedDocument.projectNameByIT,
@@ -165,153 +228,11 @@ router.route("/editAndUpdate/:id").post((req, res) => {
       clientInfo
         .save()
         .then((res) => {
-          log("Successfully edited and updated the values..!" + res);
+          log("successfully Edited" );
         })
         .catch((err) => res.status(400).json("Error in saving EditAndUpdate API : " + err));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Backend error: " + err));
 });
-
-router.route("/").get((req, res) => {
-  ClientInfo.find().sort({
-    createdAt: -1,
-  })
-    .then((clientInfo) => res.json(clientInfo))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/add").post((req, res) => {
-  //not in use
-  const projectNameByIT = req.body.projectNameByIT;
-  const projectManager = req.body.projectManager;
-  const email = req.body.email;
-  const practice = req.body.practice;
-  const status = req.body.status;
-
-  const projectName = req.body.projectName;
-  const securityMeasure = req.body.securityMeasure;
-  const informIT = req.body.informIT;
-  const workStationSelected = req.body.workStationSelected;
-  const devTypeSelected = req.body.devTypeSelected;
-  const allowedWebsite = req.body.allowedWebsite;
-  const isNDAsigned = req.body.isNDAsigned;
-  const isGDPRcompliance = req.body.isGDPRcompliance;
-  const isCyberSecConducted = req.body.isCyberSecConducted;
-  const securityBreach = req.body.securityBreach;
-  const isDisasterInsuCovered = req.body.isDisasterInsuCovered;
-  const disasterDetails = req.body.disasterDetails;
-  const showInsuranceDetails = req.body.showInsuranceDetails;
-  const isIsolatedEnvReq = req.body.isIsolatedEnvReq;
-  const isolationDetails = req.body.isolationDetails;
-  const showIsolatedDetails = req.body.showIsolatedDetails;
-  const isDLPreq = req.body.isDLPreq;
-  const isClientEmailProvided = req.body.isClientEmailProvided;
-
-  const newClientInfo = new ClientInfo({
-    projectNameByIT,
-    projectManager,
-    email,
-    practice,
-    status,
-
-    projectName,
-    securityMeasure,
-    informIT,
-    workStationSelected,
-    devTypeSelected,
-    allowedWebsite,
-    isNDAsigned,
-    isGDPRcompliance,
-    isCyberSecConducted,
-    securityBreach,
-    isDisasterInsuCovered,
-    disasterDetails,
-    showInsuranceDetails,
-    isIsolatedEnvReq,
-    isolationDetails,
-    showIsolatedDetails,
-    isDLPreq,
-    isClientEmailProvided,
-  });
-
-  newClientInfo
-    .save()
-    .then(() => res.json("ClientInfo added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/:id").get((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => res.json(clientInfo))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/deleteStatus/:id").post((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.deleteReason = req.body.deleteReason;
-      clientInfo.status = req.body.status;
-      clientInfo
-        .save()
-        .then(() => res.json("Status is updated to Deleted!"))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-
-
-router.route("/restoreProject/:id").post((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.status = req.body.status;
-      clientInfo
-        .save()
-        .then(() => res.json("Status is updated to Submitted!"))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/approvStatus/:id").post((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.status = req.body.status;
-      clientInfo
-        .save()
-        .then(() => res.json("Status is updated to Approved!"))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/submit/:id").post((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.status = req.body.status;
-      clientInfo
-        .save()
-        .then(() => res.json("ClientInfo Status updated to Submitted!"))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-{
-// router.route("/:id").delete((req, res) => {
-//   ClientInfo.findByIdAndDelete(req.params.id)
-//     .then(() => res.json("ClientInfo deleted."))
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
-
-// We can create multiple routes for filter option.
-// router.route("/").get((req, res) => {
-//   ClientInfo.find().sort({
-//     createdAt: -1,
-//   })
-//     .then((clientInfo) => res.json(clientInfo))
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
-}
 
 module.exports = router;
