@@ -1,18 +1,19 @@
 const nodemailer = require("nodemailer");
 const log = console.log;
 
-const mailReshare = (email, projectManager, projectNameByIT, reshareReason, mongoID) => {
+const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
   //Step 1:
+  log("inside step 1");
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     service: 'gmail',
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-      // user: process.env.SMTP_USER,
-      user: "deepakumar.dx@gmail.com",
-      // pass: process.env.SMTP_PASS,
-      pass: "GoogleBaba@8",
+     // user: process.env.SMTP_USER,
+     user: "deepakumar.dx@gmail.com",
+     // pass: process.env.SMTP_PASS,
+     pass: "GoogleBaba@8",
     },
     tls: {
       rejectUnauthorized: false,
@@ -26,12 +27,12 @@ const mailReshare = (email, projectManager, projectNameByIT, reshareReason, mong
     from: 'deepakumar.dx@gmail.com',
     // cc: "thedipakkumaryadav@gmail.com",
     // bcc: "deepakumar.dx@gmail.com",
-    subject: `"Request to re-share the details of ${projectNameByIT} project."`,
-    html: "Email body "` <p> <b> Dear ${projectManager} </b> </p>
+    subject: `"Request to share the details of ${projectNameByIT} project."`,
+    html: ` <p> <b> Dear ${projectManager} </b> </p>
             
-             You are request to fill the details of <b> ${projectNameByIT} </b> project AGAIN
+            <p> Hope you are doing well. </p>
+             You are request to fill the details of <b> ${projectNameByIT} </b> project 
              by clicking <a href = "http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"> <b> here. </b> </a>
-             <p>The reason you need to resubmit the detials is because: <b> ${reshareReason} </b> </p>
             <p>Note: All fields are mendatory, if you are not sure about some detials then mention "NOT SURE" or "NOT APPLICABLE".</P>
              <br></br>
             <p> Warm Regards, <br>
@@ -44,20 +45,21 @@ const mailReshare = (email, projectManager, projectNameByIT, reshareReason, mong
 
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
+  
     if (err) {
-      res.json({
-          status: "failed to send the mail",
-        });
       log("Filed to send, to see the detials uncomment below log");
       log("Error occured in sending the mail : ", err);
+     res.json({
+        status: "failed to send the mail",
+      });
     } else {
+      log("Mail Sent Successfully, to see the detials uncomment below log");
+      log("Mail sent successfully", info);
       res.json({
         status: "success",
       });
-      log("Mail Sent Successfully, to see the detials uncomment below log");
-      log("Mail sent successfully", info);
     }
   });
 };
 
-module.exports = { mailReshare };
+module.exports = { shareForm };
