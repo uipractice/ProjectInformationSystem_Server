@@ -13,18 +13,24 @@ app.use(express.json());
  
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploadsDocs");
+    cb(null, "./uploadDoc");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "--" + file.originalname);
   },
 });
 
-const upload = multer({ storage:fileStorageEngine });
-app.post("/multiple", upload.array('fileData', 10), (req, res) => {
+const upload = multer({ storage: fileStorageEngine });
+
+app.post("/single", upload.single("fileName"), (req, res) => {
+  log(req.file);
+  res.send("Single file upload is successful");
+});
+
+app.post("/multiple", upload.array("fileName", 50), (req, res) => {
   log(req.files);
-  res.send("Multiple files upload is successful");
-})
+  res.send("Multiple files upload is successful"); 
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => log(`Server running on port: ${port}`));

@@ -12,6 +12,7 @@ const { formSubmitted } = require("../mails/formSubmitted");
 // const { mailReminder } = require("../mailReminder");
 // const { mailAndUpdate } = require("../mailAndUpdate");
 
+
 router.route("/").get((req, res) => {
   ClientInfo.find().sort({
     createdAt: -1,
