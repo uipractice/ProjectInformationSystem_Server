@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const log = console.log;
 
-const mailReminder = (email, projectManager, projectNameByIT, mongoID) => {
+const reShareForm = (email, projectManager, projectNameByIT, reshareReason, mongoID) => {
   //Step 1:
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -26,12 +26,12 @@ const mailReminder = (email, projectManager, projectNameByIT, mongoID) => {
     from: 'deepakumar.dx@gmail.com',
     // cc: "thedipakkumaryadav@gmail.com",
     // bcc: "deepakumar.dx@gmail.com",
-    subject: `"Request to re-share the details of ${projectNameByIT} project."`,
-    html: ` <p> <b> Dear ${projectManager} </b> </p>
+    subject: `"Re-share the details of ${projectNameByIT} project."`,
+    html: "Email body "` <p> <b> Dear ${projectManager} </b> </p>
             
-            <p> Gentel Reminder !. </p>
              You are request to fill the details of <b> ${projectNameByIT} </b> project AGAIN
              by clicking <a href = "http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"> <b> here. </b> </a>
+             <p>The reason you need to resubmit the detials is because: <b> ${reshareReason} </b> </p>
             <p>Note: All fields are mendatory, if you are not sure about some detials then mention "NOT SURE" or "NOT APPLICABLE".</P>
              <br></br>
             <p> Warm Regards, <br>
@@ -60,4 +60,4 @@ const mailReminder = (email, projectManager, projectNameByIT, mongoID) => {
   });
 };
 
-module.exports = { mailReminder };
+module.exports = { reShareForm };

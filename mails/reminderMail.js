@@ -1,11 +1,11 @@
 const nodemailer = require("nodemailer");
 const log = console.log;
 
-const mailAndUpdate = (email, projectManager, projectNameByIT, mongoID) => {
+const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
   //Step 1:
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    service: "gmail",
+    service: 'gmail',
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
@@ -21,15 +21,15 @@ const mailAndUpdate = (email, projectManager, projectNameByIT, mongoID) => {
 
   // Step 2
   let mailOptions = {
-    to: "deepakumar.dx@gmail.com",
+    to: email,
     // from: '"Evoke Sales Team" <evokepoc@evoketechnologies.com>',
-    from: email,
+    from: 'deepakumar.dx@gmail.com',
     // cc: "thedipakkumaryadav@gmail.com",
     // bcc: "deepakumar.dx@gmail.com",
-    subject: `"Form of ${projectNameByIT} project is submitted."`,
+    subject: `"Gentel Reminder ! Share the details of ${projectNameByIT} project."`,
     html: ` <p> <b> Dear ${projectManager} </b> </p>
             
-            <p> Please Approve it !. </p>
+            <p> Gentel Reminder !. </p>
              You are request to fill the details of <b> ${projectNameByIT} </b> project AGAIN
              by clicking <a href = "http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"> <b> here. </b> </a>
             <p>Note: All fields are mendatory, if you are not sure about some detials then mention "NOT SURE" or "NOT APPLICABLE".</P>
@@ -46,8 +46,8 @@ const mailAndUpdate = (email, projectManager, projectNameByIT, mongoID) => {
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       res.json({
-        status: "failed to send the mail",
-      });
+          status: "failed to send the mail",
+        });
       log("Filed to send, to see the detials uncomment below log");
       log("Error occured in sending the mail : ", err);
     } else {
@@ -60,4 +60,4 @@ const mailAndUpdate = (email, projectManager, projectNameByIT, mongoID) => {
   });
 };
 
-module.exports = { mailAndUpdate };
+module.exports = { reminderMail };
