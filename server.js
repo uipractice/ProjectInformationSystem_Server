@@ -28,8 +28,11 @@ app.post("/single", upload.single("fileName"), (req, res) => {
 });
 
 app.post("/multiple", upload.array("fileName", 50), (req, res) => {
-  log(req.files);
-  res.send("Multiple files upload is successful"); 
+  log("Request file: ", req.files); //array > object
+  log("Request body: ", req.body); //array > object
+  // log("Request specifit: ", req.files.path); //undefined
+  // log("Response: ", res.response); //undefined
+  res.send(`Multiple files upload is successful`); 
 });
 
 const port = process.env.PORT || 5000;
