@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const multer = require("multer");
 require("dotenv").config();
+let ClientInfo = require("./models/clientInfo.model");
 
 const log = console.log;
 const clientInfoRouter = require("./routes/clientInfo");
@@ -22,17 +23,26 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-app.post("/single", upload.single("fileName"), (req, res) => {
-  log(req.file);
-  res.send("Single file upload is successful");
-});
+app.post("/multiple/:id", upload.array("fileName", 50), (req, res) => {
+  log("1 FileName : ", req.files[0].originalname); 
+  log("2 Date + FileName : ", req.files[0].filename); 
+  log("3 Path + Date + FileName : ", req.files[0].path); 
+  res.send("Files Upload is Successful"); 
 
-app.post("/multiple", upload.array("fileName", 50), (req, res) => {
-  log("Request file: ", req.files); //array > object
-  log("Request body: ", req.body); //array > object
-  // log("Request specifit: ", req.files.path); //undefined
-  // log("Response: ", res.response); //undefined
-  res.send(`Multiple files upload is successful`); 
+  ClientInfo.findById(req.params.id)
+  .then((clientInfo) => {
+    clientInfo.fileName = req.files[0].filename;
+    clientInfo.pathName = req.files[0].path;
+    clientInfo
+      .save()
+      .then(() => {
+        res.json("File path saved to DB")
+        log(res.data)
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
+  })
+  .catch((err) => res.status(400).json("Error: " + err));
+
 });
 
 const port = process.env.PORT || 5000;

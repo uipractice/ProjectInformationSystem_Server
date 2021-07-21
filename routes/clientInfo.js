@@ -1,17 +1,71 @@
 const router = require("express").Router();
-const multer = require("multer");
+// const multer = require("multer");
 let ClientInfo = require("../models/clientInfo.model");
 const log = console.log;
 
-const { shareForm } = require("../mails/shareForm");
-const { reShareForm } = require("../mails/reShareForm");
-const { reminderMail } = require("../mails/reminderMail");
-const { formSubmitted } = require("../mails/formSubmitted");
+const { shareForm } = require("../mails/shareForm");           //mail
+const { reShareForm } = require("../mails/reShareForm");       //mailReshare
+const { reminderMail } = require("../mails/reminderMail");     //mailReminder
+const { formSubmitted } = require("../mails/formSubmitted");   //mailAndUpdate
 
-// const { sendEmail } = require("../mail");
-// const { mailReshare } = require("../mailReshare");
-// const { mailReminder } = require("../mailReminder");
-// const { mailAndUpdate } = require("../mailAndUpdate");
+// const fileStorageEngine = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "../uploadDoc");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "--" + file.originalname);
+//   },
+// });
+// const upload = multer({ storage: fileStorageEngine });
+
+// router.route("/multiple", upload.array("fileName", 50), (req, res) => {
+//   log("1 FileName : ", req.files[0].originalname); 
+//   log("2 Date + FileName : ", req.files[0].filename); 
+//   log("3 Path + Date + FileName : ", req.files[0].path); 
+//   res.send("Files Upload is Successful"); 
+// });
+
+router.route("/mailAndUpdate/:id").post((req, res) => {
+  ClientInfo.findByIdAndUpdate(req.params.id)
+    .then((clientInfo) => {
+      clientInfo.projectNameByIT = req.body.preProjectNameByIT; 
+      // clientInfo.status = "Submitted"; 
+      clientInfo.status = "Pending";
+      //above two are getting updated, below is getting added and email, practice being undisturbed.
+      clientInfo.securityMeasure = req.body.securityMeasure;
+      clientInfo.informIT = req.body.informIT;
+      clientInfo.workStationSelected = req.body.workStationSelected;
+      clientInfo.devTypeSelected = req.body.devTypeSelected;
+      clientInfo.allowedWebsite = req.body.allowedWebsite;
+      clientInfo.isNDAsigned = req.body.isNDAsigned;
+      clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
+      clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
+      clientInfo.securityBreach = req.body.securityBreach;
+      clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
+      clientInfo.disasterDetails = req.body.disasterDetails;
+      clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
+      clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
+      clientInfo.isolationDetails = req.body.isolationDetails;
+      clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
+      clientInfo.isDLPreq = req.body.isDLPreq;
+      clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
+      
+      clientInfo
+        .save()
+        .then((savedDocument) => {
+          res.json("formSubmitted email");
+          // log("req body : ", req.body)
+          // formSubmitted(
+          //           savedDocument.email,
+          //           savedDocument.projectManager,
+          //           savedDocument.projectNameByIT,
+          //           savedDocument._id
+          //   );
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
 
 router.route("/").get((req, res) => {
   ClientInfo.find().sort({
@@ -161,48 +215,6 @@ router.route("/mailReminder/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error dp2: " + err));
     
-});
-
-router.route("/mailAndUpdate/:id").post((req, res) => {
-  ClientInfo.findByIdAndUpdate(req.params.id)
-    .then((clientInfo) => {
-      clientInfo.projectNameByIT = req.body.preProjectNameByIT; 
-      // clientInfo.status = "Submitted"; 
-      clientInfo.status = "Pending";
-      //above two are getting updated, below is getting added and email, practice being undisturbed.
-      clientInfo.securityMeasure = req.body.securityMeasure;
-      clientInfo.informIT = req.body.informIT;
-      clientInfo.workStationSelected = req.body.workStationSelected;
-      clientInfo.devTypeSelected = req.body.devTypeSelected;
-      clientInfo.allowedWebsite = req.body.allowedWebsite;
-      clientInfo.isNDAsigned = req.body.isNDAsigned;
-      clientInfo.isGDPRcompliance = req.body.isGDPRcompliance;
-      clientInfo.isCyberSecConducted = req.body.isCyberSecConducted;
-      clientInfo.securityBreach = req.body.securityBreach;
-      clientInfo.isDisasterInsuCovered = req.body.isDisasterInsuCovered;
-      clientInfo.disasterDetails = req.body.disasterDetails;
-      clientInfo.showInsuranceDetails = req.body.showInsuranceDetails;
-      clientInfo.isIsolatedEnvReq = req.body.isIsolatedEnvReq;
-      clientInfo.isolationDetails = req.body.isolationDetails;
-      clientInfo.showIsolatedDetails = req.body.showIsolatedDetails;
-      clientInfo.isDLPreq = req.body.isDLPreq;
-      clientInfo.isClientEmailProvided = req.body.isClientEmailProvided;
-      
-      clientInfo
-        .save()
-        .then((savedDocument) => {
-          res.json("Informing IT team that clientInfo is updated!");
-          log("req body : ", req.body)
-          // formSubmitted(
-          //           savedDocument.email,
-          //           savedDocument.projectManager,
-          //           savedDocument.projectNameByIT,
-          //           savedDocument._id
-          //   );
-        })
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/editAndUpdate/:id").post((req, res) => {
