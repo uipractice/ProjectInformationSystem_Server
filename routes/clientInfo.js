@@ -1,5 +1,5 @@
 const router = require("express").Router();
-// const multer = require("multer");
+
 let ClientInfo = require("../models/clientInfo.model");
 const log = console.log;
 
@@ -8,29 +8,12 @@ const { reShareForm } = require("../mails/reShareForm");       //mailReshare
 const { reminderMail } = require("../mails/reminderMail");     //mailReminder
 const { formSubmitted } = require("../mails/formSubmitted");   //mailAndUpdate
 
-// const fileStorageEngine = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "../uploadDoc");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "--" + file.originalname);
-//   },
-// });
-// const upload = multer({ storage: fileStorageEngine });
-
-// router.route("/multiple", upload.array("fileName", 50), (req, res) => {
-//   log("1 FileName : ", req.files[0].originalname); 
-//   log("2 Date + FileName : ", req.files[0].filename); 
-//   log("3 Path + Date + FileName : ", req.files[0].path); 
-//   res.send("Files Upload is Successful"); 
-// });
-
 router.route("/mailAndUpdate/:id").post((req, res) => {
   ClientInfo.findByIdAndUpdate(req.params.id)
     .then((clientInfo) => {
       clientInfo.projectNameByIT = req.body.preProjectNameByIT; 
-      // clientInfo.status = "Submitted"; 
-      clientInfo.status = "Pending";
+      clientInfo.status = "Submitted"; 
+      // clientInfo.status = "Pending";
       //above two are getting updated, below is getting added and email, practice being undisturbed.
       clientInfo.securityMeasure = req.body.securityMeasure;
       clientInfo.informIT = req.body.informIT;
@@ -74,6 +57,19 @@ router.route("/").get((req, res) => {
     .then((clientInfo) => res.json(clientInfo))
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+router.route("/download").get((req, res) => {
+  // const filePath = `${__dirname}/../${res.pathName}`
+    //  const filePath = `${__dirname}/../uploadDoc/1626894517317--Habbits.txt`
+     const filePath = `${__dirname}/../uploadDoc/mm.pdf`
+     res.download(filePath);
+  // res.download(__dirname + '../uploadDoc/1626894517317--Habbits.txt', '1626894517317--Habbits.txt');
+  
+     ClientInfo.findById(req.params.id)
+        .then((clientInfo) => {res.json(clientInfo.pathName)})
+        .catch((err) => res.status(400).json("Error: " + err));
+});
+
 
 router.route("/:id").get((req, res) => {
   ClientInfo.findById(req.params.id)
