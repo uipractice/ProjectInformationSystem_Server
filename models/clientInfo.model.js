@@ -28,6 +28,8 @@ const clientInfoSchema = new Schema(
         deleteReason: { type: String },
         restoreReason: { type: String },
         reshareReason: { type: String },
+        fileName: { type: String },
+        pathName: { type: String },
     }, 
     
     {  timestamps: true }
