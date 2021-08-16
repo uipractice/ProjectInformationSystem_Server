@@ -10,10 +10,10 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-     // user: process.env.SMTP_USER,
-     user: "deepakumar.dx@gmail.com",
-     // pass: process.env.SMTP_PASS,
-     pass: "GoogleBaba@8",
+      // user: process.env.SMTP_USER,
+      user: 'deepakumar.dx@gmail.com',
+      // pass: process.env.SMTP_PASS,
+      pass: 'GoogleBaba@2',
     },
     tls: {
       rejectUnauthorized: false,
