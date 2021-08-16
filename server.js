@@ -54,7 +54,7 @@ app.get('/uploadDoc/:id', async(req, resp) => {
     clientInfo
       .save()
       .then(() => {
-        res.json("File path saved to DB")
+        res.json('File path saved to DB'); 
         log(res.data)
       })
       .catch((err) => res.status(400).json("Error: " + err));
