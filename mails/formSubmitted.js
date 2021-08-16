@@ -12,7 +12,7 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
       // user: process.env.SMTP_USER,
       user: "deepakumar.dx@gmail.com",
       // pass: process.env.SMTP_PASS,
-      pass: "GoogleBaba@8",
+      pass: "GoogleBaba@2",
     },
     tls: {
       rejectUnauthorized: false,
