@@ -23,7 +23,7 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-app.post("/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.send("Succss"); 
 });
 
