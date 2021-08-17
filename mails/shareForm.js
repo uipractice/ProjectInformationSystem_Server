@@ -1,9 +1,9 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const log = console.log;
 
 const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
   //Step 1:
-  log("inside step 1");
+  log('inside step 1');
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     service: 'gmail',
@@ -45,19 +45,12 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
 
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
-  
     if (err) {
-      log("Filed to send, to see the detials uncomment below log");
-      log("Error occured in sending the mail : ", err);
-     res.json({
-        status: "failed to send the mail",
-      });
+      log('Failed to send, to see the detials uncomment below log');
+      log('Error occured in sending the mail : ', err);
     } else {
-      log("Mail Sent Successfully, to see the detials uncomment below log");
-      log("Mail sent successfully", info);
-      res.json({
-        status: "success",
-      });
+      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail sent successfully', info);
     }
   });
 };
