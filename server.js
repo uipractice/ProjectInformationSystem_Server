@@ -25,6 +25,10 @@ const upload = multer({ storage: storage });
 //   },
 // });
 
+app.post('/health', (req, res) => {
+  res.send('Succss');
+});
+
 // const upload = multer({ storage: fileStorageEngine });
 
 // app.post('/multipleOld/:id', upload.array('fileName', 50), (req, res) => {
