@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const log = console.log;
 
 const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
@@ -10,9 +10,9 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
     secure: process.env.SMTP_SECURE,
     auth: {
       // user: process.env.SMTP_USER,
-      user: "deepakumar.dx@gmail.com",
+      user: 'deepakumar.dx@gmail.com',
       // pass: process.env.SMTP_PASS,
-      pass: "GoogleBaba@2",
+      pass: 'GoogleBaba@2',
     },
     tls: {
       rejectUnauthorized: false,
@@ -45,17 +45,11 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      res.json({
-          status: "failed to send the mail",
-        });
-      log("Filed to send, to see the detials uncomment below log");
-      log("Error occured in sending the mail : ", err);
+      log('Failed to send, to see the detials uncomment below log');
+      log('Error occured in sending the mail : ', err);
     } else {
-      res.json({
-        status: "success",
-      });
-      log("Mail Sent Successfully, to see the detials uncomment below log");
-      log("Mail sent successfully", info);
+      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail sent successfully', info);
     }
   });
 };

@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const path = require('path');
 const fs = require('fs');
+const AWS = require('aws-sdk');
+
+AWS.config.update({ region: 'ap-south-1' });
 
 let ClientInfo = require('../models/clientInfo.model');
 const log = console.log;
@@ -62,29 +65,48 @@ router.route('/').get((req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-router.route('/download/:id').get((req, res) => {
-  ClientInfo.findById(req.params.id)
-    .then((clientInfo) => {
-      const filePath = path.join(path.dirname(__dirname), clientInfo.pathName);
-      const fileName = path.basename(filePath);
-      res.download(filePath, fileName);
-    })
-    .catch((err) => res.status(400).json('Error: ' + err));
+// Get Signed URL for a single file
+router.route('/signedUrl').get((req, res) => {
+  const { fileName } = req.query;
+  const signedUrlExpireSeconds = 60 * 5;
+  const s3 = new AWS.S3({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    signatureVersion: 'v4',
+  });
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: fileName,
+    Expires: signedUrlExpireSeconds,
+  };
+  const file = s3.getSignedUrl('getObject', params);
+  res.send(file);
 });
 
-// router.route('/download').get((req, res) => {
-//   // const filePath = `${__dirname}/../${res.pathName}`
-//   //  const filePath = `${__dirname}/../uploadDoc/1626894517317--Habbits.txt`
-//   const filePath = `${__dirname}/../uploadDoc/mm.pdf`;
-//   res.download(filePath);
-//   // res.download(__dirname + '../uploadDoc/1626894517317--Habbits.txt', '1626894517317--Habbits.txt');
-
-//   ClientInfo.findById(req.params.id)
-//     .then((clientInfo) => {
-//       res.json(clientInfo.pathName);
-//     })
-//     .catch((err) => res.status(400).json('Error: ' + err));
-// });
+// Get Signed URL for multiple calls
+router.route('/download/:id').get((req, res) => {
+  ClientInfo.findById(req.params.id).then((client) => {
+    log('got client');
+    const fileNames = client.uploadedFiles;
+    const signedUrlExpireSeconds = 60 * 5;
+    const s3 = new AWS.S3({
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    });
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Expires: signedUrlExpireSeconds,
+    };
+    const signedUrls = [];
+    fileNames.forEach((url, index) => {
+      log('getting file url:', url);
+      params.Key = url;
+      const signedUrl = s3.getSignedUrl('getObject', params);
+      signedUrls.push(signedUrl);
+    });
+    res.send(signedUrls);
+  });
+});
 
 router.route('/:id').get((req, res) => {
   ClientInfo.findById(req.params.id)
