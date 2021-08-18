@@ -97,7 +97,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                       margin-top: 0;
                     "
                   >
-                    Hello Name
+                    Hello ${projectManager}
                   </p>
                   <p
                     style="
@@ -128,7 +128,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                 "
               >
                 <a
-                  href="#"
+                  href="http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
                     background: linear-gradient(
                       180deg,
@@ -173,15 +173,15 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      res.json({
-        status: 'failed to send the mail',
-      });
+      // res.json({
+      //   status: 'failed to send the mail',
+      // });
       log('Filed to send, to see the detials uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      res.json({
-        status: 'success',
-      });
+      // res.json({
+      //   status: 'success',
+      // });
       log('Mail Sent Successfully, to see the detials uncomment below log');
       log('Mail sent successfully', info);
     }
