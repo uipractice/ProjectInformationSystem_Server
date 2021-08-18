@@ -222,9 +222,9 @@ router.route('/mailReshare/:id').post((req, res) => {
 });
 
 router.route('/feebackMail').post((req, res) => {
-  clientInfo
-    .then((savedDocument) => {
-      feedbackMail(savedDocument.feedbackBody);
+  ClientInfo.findById(req.params.id)
+  .then((clientInfo) => {
+      feedbackMail(clientInfo);
       log('Sharing feedback mail !');
     })
     .catch((err) => res.status(400).json('Error dp: ' + err));
