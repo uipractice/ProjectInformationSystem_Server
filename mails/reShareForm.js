@@ -33,7 +33,7 @@ const reShareForm = (
     // cc: "thedipakkumaryadav@gmail.com",
     // bcc: "deepakumar.dx@gmail.com",
     subject: `"Re-share the details of ${projectNameByIT} project."`,
-    html: 'Email body '` <!DOCTYPE html>
+    html: ` <!DOCTYPE html>
     <html lang="en-IN">
       <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -103,7 +103,7 @@ const reShareForm = (
                       margin-top: 0;
                     "
                   >
-                    Hello Name
+                    Hello ${projectManager}
                   </p>
                   <p
                     style="
@@ -145,7 +145,7 @@ const reShareForm = (
                 "
               >
                 <a
-                  href="#"
+                  href="http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
                     background: linear-gradient(
                       180deg,
@@ -189,15 +189,15 @@ const reShareForm = (
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      res.json({
-        status: 'failed to send the mail',
-      });
+      // res.json({
+      //   status: 'failed to send the mail',
+      // });
       log('Filed to send, to see the detials uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      res.json({
-        status: 'success',
-      });
+      // res.json({
+      //   status: 'success',
+      // });
       log('Mail Sent Successfully, to see the detials uncomment below log');
       log('Mail sent successfully', info);
     }
