@@ -13,6 +13,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+  res.send('Succss');
+});
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -25,9 +29,7 @@ const upload = multer({ storage: storage });
 //   },
 // });
 
-app.post('/health', (req, res) => {
-  res.send('Succss');
-});
+
 
 // const upload = multer({ storage: fileStorageEngine });
 
