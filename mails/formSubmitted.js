@@ -5,14 +5,11 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
   //Step 1:
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    service: 'gmail',
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-      // user: process.env.SMTP_USER,
-      user: 'deepakumar.dx@gmail.com',
-      // pass: process.env.SMTP_PASS,
-      pass: 'GoogleBaba@2',
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
       rejectUnauthorized: false,
@@ -21,11 +18,10 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
 
   // Step 2
   let mailOptions = {
-    to: 'deepakumar.dx@gmail.com',
-    // from: '"Evoke Sales Team" <evokepoc@evoketechnologies.com>',
+    to: 'evkappspoc@evoketechnologies.com',   //Evoke IT team email ID
     from: email,
-    // cc: "thedipakkumaryadav@gmail.com",
-    // bcc: "deepakumar.dx@gmail.com",
+    // cc: "cc email id goes here",
+    // bcc: "cc email id goes here",
     subject: `"Form of ${projectNameByIT} project is submitted."`,
     html: ` <!DOCTYPE html>
     <html lang="en-IN">

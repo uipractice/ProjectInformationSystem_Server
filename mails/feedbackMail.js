@@ -5,14 +5,11 @@ const feedbackMail = (feedbackBody) => {
   //Step 1:
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    service: 'gmail',
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-      // user: process.env.SMTP_USER,
-      user: 'deepakumar.dx@gmail.com',
-      // pass: process.env.SMTP_PASS,
-      pass: 'GoogleBaba@2',
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
       rejectUnauthorized: false,
@@ -22,17 +19,13 @@ const feedbackMail = (feedbackBody) => {
   // Step 2
   let mailOptions = {
     to: 'evoke_ui@evoketechnologies.com',
-    // from: '"Evoke Sales Team" <evokepoc@evoketechnologies.com>',
-    from: 'deepakumar.dx@gmail.com',
-    // cc: "thedipakkumaryadav@gmail.com",
-    // bcc: "deepakumar.dx@gmail.com",
+    from: '"Evoke IT Team" <evkappspoc@evoketechnologies.com>', //Evoke IT team email ID
+    // cc: "cc email id goes here",
+    // bcc: "cc email id goes here",
     subject: `"Feeback of PIS Applicaion."`,
-    html: ` <p> <b> Dear Basha/Team </b> </p>
+    html: ` <p> <b> Dear Basha </b> </p>
             
-           
             ${feedbackBody} 
-
-            <p>Note: All fields are mendatory, if you are not sure about some detials then mention "NOT SURE" or "NOT APPLICABLE".</P>
           
             <p> Warm Regards, <br>
                 Evoke IT Teams  </p>
