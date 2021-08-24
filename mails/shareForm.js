@@ -6,14 +6,11 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
   log('inside step 1');
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    service: 'gmail',
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
     auth: {
-      // user: process.env.SMTP_USER,
-      user: 'deepakumar.dx@gmail.com',
-      // pass: process.env.SMTP_PASS,
-      pass: 'GoogleBaba@2',
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
       rejectUnauthorized: false,
@@ -23,10 +20,9 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 2
   let mailOptions = {
     to: email,
-    // from: '"Evoke Sales Team" <evokepoc@evoketechnologies.com>',
-    from: 'deepakumar.dx@gmail.com',
-    // cc: "thedipakkumaryadav@gmail.com",
-    // bcc: "deepakumar.dx@gmail.com",
+    from: '"Evoke IT Team" <evkappspoc@evoketechnologies.com>', //Evoke IT team email ID
+    // cc: "cc email id goes here",
+    // bcc: "cc email id goes here",
     subject: `"Request to share the details of ${projectNameByIT} project."`,
     html: ` <!DOCTYPE html>
     <html lang="en-IN">
