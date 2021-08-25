@@ -222,12 +222,12 @@ router.route('/mailReshare/:id').post((req, res) => {
 });
 
 router.route('/feebackMail').post((req, res) => {
-  ClientInfo.findById(req.params.id)
-  .then((clientInfo) => {
-      feedbackMail(clientInfo);
-      log('Sharing feedback mail !');
-    })
-    .catch((err) => res.status(400).json('Error dp: ' + err));
+  try {
+    feedbackMail(req.body.feedbackText);
+    log('Sharing feedback mail !');
+  } catch (err) {
+    res.status(400).json('Error dp: ' + err);
+  }
 });
 
 router.route('/mailReminder/:id').post((req, res) => {
