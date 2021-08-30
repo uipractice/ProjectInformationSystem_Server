@@ -136,7 +136,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                 "
               >
                 <a
-                  href="http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"
+                  href="${process.env.REACT_APP_BASE_URL}/form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
                     background: linear-gradient(
                       180deg,
