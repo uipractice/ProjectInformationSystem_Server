@@ -22,7 +22,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
     from: '"Evoke IT Team" <evkappspoc@evoketechnologies.com>', //Evoke IT team email ID
     // cc: "cc email id goes here",
     // bcc: "cc email id goes here",
-    subject: `"Gentel Reminder ! Share the details of ${projectNameByIT} project."`,
+    subject: `"Gentle Reminder ! Share the details of ${projectNameByIT} project."`,
     html: ` <!DOCTYPE html>
     <html lang="en-IN">
       <head>
