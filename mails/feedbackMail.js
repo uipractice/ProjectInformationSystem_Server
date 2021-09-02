@@ -92,7 +92,7 @@ const feedbackMail = (feedbackBody) => {
                       margin-top: 0;
                     "
                   >
-                    Hello Name
+                    Hello Evoke UI Team
                   </p>
                   <p
                     style="
@@ -104,8 +104,7 @@ const feedbackMail = (feedbackBody) => {
                       margin-bottom: 0;
                     "
                   >
-                    A few more details about the project are missing. Please input
-                    the missing points in the form again.
+                   ${feedbackBody}
                   </p>
                 </div>
               </td>

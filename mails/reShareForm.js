@@ -141,13 +141,9 @@ const reShareForm = (
                 "
               >
                 <a
-                  href="http://localhost:3000/form/${mongoID}" target="_blank" title="Click to Open the Form"
+                  href="${process.env.REACT_APP_BASE_URL}/form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
-                    background: linear-gradient(
-                      180deg,
-                      #fc8500 27.94%,
-                      #ffb701 105.79%
-                    );
+                    background: rgb(241, 106, 33);
                     box-shadow: 0px 20px 50px rgba(255, 183, 1, 0.15);
                     border-radius: 2px;
                     padding: 14px 50px;
