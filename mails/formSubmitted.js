@@ -49,7 +49,7 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
         >
           <tbody>
             <tr style="background: #023047">
-              <td style="padding: 7px 0 7px 15px; width: 39%">
+              <td style="padding: 7px 0 7px 15px;" width="39%">
                 <img
                   src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/emails-logo.png"
                 />
