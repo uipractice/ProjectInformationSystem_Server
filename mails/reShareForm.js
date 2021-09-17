@@ -57,7 +57,7 @@ const reShareForm = (
             <tr style="background: #023047">
               <td style="padding: 7px 0 7px 15px; width: 39%">
                 <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/logo-pis.svg"
+                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/emails-logo.png"
                 />
               </td>
               <td>
@@ -167,7 +167,7 @@ const reShareForm = (
               >
                 <img
                   src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/reshared.png"
-                  style="width: 260px"
+                  width="260px"
                 />
               </td>
             </tr>
