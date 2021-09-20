@@ -18,7 +18,7 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
 
   // Step 2
   let mailOptions = {
-    to: 'evkappspoc@evoketechnologies.com',   //Evoke IT team email ID
+    to: 'evkappspoc@evoketechnologies.com', //Evoke IT team email ID
     from: email,
     // cc: "cc email id goes here",
     // bcc: "cc email id goes here",
@@ -49,9 +49,9 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
         >
           <tbody>
             <tr style="background: #023047">
-              <td style="padding: 7px 0 7px 15px; width: 39%">
+              <td style="padding: 7px 0 7px 15px;" width="39%">
                 <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/logo-pis.svg"
+                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/emails-logo.png"
                 />
               </td>
               <td>
@@ -114,7 +114,7 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
               >
                 <img
                   src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/submitted.png"
-                  style="width: 260px"
+                  width="260px"
                 />
               </td>
             </tr>
