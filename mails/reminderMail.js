@@ -124,7 +124,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                 "
               >
                 <a
-                  href="${process.env.REACT_APP_BASE_URL}/form/${mongoID}" target="_blank" title="Click to Open the Form"
+                  href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
                     background: rgb(241, 106, 33);
                     box-shadow: 0px 20px 50px rgba(255, 183, 1, 0.15);
