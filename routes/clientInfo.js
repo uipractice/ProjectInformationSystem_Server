@@ -250,7 +250,7 @@ router.route('/mailReminder/:id').post((req, res) => {
     .catch((err) => res.status(400).json('Error dp2: ' + err));
 });
 
-router.route('/editAndUpdate/:id').post((req, res) => {
+router.route('/editAndUpdate/:id').put((req, res) => {
   ClientInfo.findByIdAndUpdate(req.params.id)
     .then((clientInfo) => {
       clientInfo.projectNameByIT = req.body.projectNameByIT;
