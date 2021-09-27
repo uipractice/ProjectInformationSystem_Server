@@ -275,8 +275,12 @@ router.route('/editAndUpdate/:id').put((req, res) => {
 
       clientInfo
         .save()
-        .then((res) => {
+        .then((response) => {
           log('successfully Edited');
+          res.status(200).send({
+            data: response,
+            message: "Successfully Updated"
+          });
         })
         .catch((err) =>
           res.status(400).json('Error in saving EditAndUpdate API : ' + err)
