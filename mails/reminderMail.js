@@ -149,8 +149,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                 colspan="3"
               >
                 <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/reminder.png"
-                  width="260px"
+                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/reminder-1.png"
                 />
               </td>
             </tr>
