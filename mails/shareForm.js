@@ -138,8 +138,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                 <a
                   href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                   style="
-                    background: rgb(241, 106, 33);
-                    box-shadow: 0px 20px 50px rgba(255, 183, 1, 0.15);
+                    background-color: #f16a21;
                     border-radius: 2px;
                     padding: 14px 50px;
                     color: #fff;
@@ -161,8 +160,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                 colspan="3"
               >
                 <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/form-share.png"
-                  width="260px"
+                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/test-img.png"
                 />
               </td>
             </tr>
