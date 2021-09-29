@@ -250,7 +250,7 @@ router.route('/mailReminder/:id').post((req, res) => {
     .catch((err) => res.status(400).json('Error dp2: ' + err));
 });
 
-router.route('/editAndUpdate/:id').post((req, res) => {
+router.route('/editAndUpdate/:id').put((req, res) => {
   ClientInfo.findByIdAndUpdate(req.params.id)
     .then((clientInfo) => {
       clientInfo.projectNameByIT = req.body.projectNameByIT;
@@ -275,8 +275,12 @@ router.route('/editAndUpdate/:id').post((req, res) => {
 
       clientInfo
         .save()
-        .then((res) => {
+        .then((response) => {
           log('successfully Edited');
+          res.status(200).send({
+            data: response,
+            message: "Successfully Updated"
+          });
         })
         .catch((err) =>
           res.status(400).json('Error in saving EditAndUpdate API : ' + err)

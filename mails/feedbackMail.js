@@ -123,7 +123,6 @@ const feedbackMail = (feedbackBody) => {
               >
                 <img
                   src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/feedback.png"
-                  width="260px"
                 />
               </td>
             </tr>
