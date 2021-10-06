@@ -94,7 +94,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                       margin-top: 0;
                     "
                   >
-                    Hello Test${projectManager}
+                    Hello ${projectManager}
                   </p>
                   <p
                     style="

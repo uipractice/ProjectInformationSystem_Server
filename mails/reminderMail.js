@@ -93,7 +93,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                       margin-top: 0;
                     "
                   >
-                    Hello Rajesh${projectManager}
+                    Hello ${projectManager}
                   </p>
                   <p
                     style="
