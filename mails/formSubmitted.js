@@ -45,59 +45,85 @@ const formSubmitted = (email, projectManager, projectNameByIT, mongoID) => {
             margin: auto;
             background: #f8f8f8;
             padding-bottom: 0;
+            border: 0;
           "
         >
           <tbody>
-            <tr style="background: #023047">
-              <td style="padding: 7px 0 7px 15px;" width="39%">
-                <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/emails-logo.png"
-                />
-              </td>
-              <td>
-                <h2
-                  style="
-                    font-size: 16px;
-                    font-weight: 900;
-                    line-height: 22px;
-                    font-family: calibri;
-                    color: #f8a066;
-                    border-left: 1px solid #7b7b7b;
-                    padding-left: 10px;
-                  "
-                >
-                  Project Information System
-                </h2>
-              </td>
-              <td style="padding: 7px 15px 7px 0">
-                <img
-                  src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/mail-icon.png"
-                  style="float: right"
-                />
-              </td>
-            </tr>
             <tr>
-              <td
-                align="left"
-                style="padding: 30px; background-color: #219ebc"
-                colspan="3"
-              >
-                <div>
-                  <p
-                    style="
-                      font-weight: bold;
-                      font-size: 20px;
-                      line-height: 24px;
-                      color: #ffffff;
-                      font-family: calibri;
-                      margin-top: 0;
-                      margin-bottom: 0;
-                      text-align: center;
-                    "
-                  >
-                    Project details are successfully submitted.
-                  </p>
-                </div>
+              <td>
+                <table
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="background-color: #023047"
+                >
+                  <tbody>
+                    <tr>
+                      <td width="20px" height="54px"></td>
+                      <td width="150px" height="54px">
+                        <img
+                          src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/09/emails-logo.png"
+                          title="logo"
+                          alt="logo main"
+                        />
+                      </td>
+                      <td width="10px" height="54px"></td>
+                      <td width="250px" height="54px" style="text-align: left">
+                        <h2
+                          style="
+                            font-size: 16px;
+                            font-weight: 900;
+                            line-height: 22px;
+                            font-family: calibri;
+                            color: #f8a066;
+                            border-left: 1px solid #7b7b7b;
+                            padding-left: 10px;
+                          "
+                        >
+                          Project Information System
+                        </h2>
+                      </td>
+                      <td width="150px" height="54px">
+                        <img
+                          src="https://d331tpl5vusgqa.cloudfront.net/wp-content/uploads/2021/08/mail-icon.png"
+                          style="float: right"
+                        />
+                      </td>
+                      <td width="20px" height="54px"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="background-color: #219ebc"
+                >
+                  <tbody>
+                    <tr>
+                      <td style="padding: 20px">
+                        <div>
+                            <p
+                            style="
+                              font-weight: bold;
+                              font-size: 20px;
+                              line-height: 24px;
+                              color: #ffffff;
+                              font-family: calibri;
+                              margin-top: 0;
+                              margin-bottom: 0;
+                              text-align: center;
+                            "
+                          >
+                            Project details are successfully submitted.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </td>
             </tr>
     
