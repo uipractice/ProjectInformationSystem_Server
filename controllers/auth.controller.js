@@ -7,7 +7,7 @@ const config = require("../config/auth.config");
         User.findOne({userName:req.body.userName})
         .then((user)=>{
             if (!user) {
-                res.status(200).send({accessToken: null, message: "Invalid user" });
+                res.status(200).send({accessToken: null, message: "Invalid Username" });
                 return;
               }
             var passwordIsValid = bcrypt.compareSync(
