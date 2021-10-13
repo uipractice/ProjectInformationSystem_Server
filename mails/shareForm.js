@@ -218,15 +218,9 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
     if (err) {
       log('Filed to send, to see the detials uncomment below log');
       log('Error occured in sending the mail : ', err);
-      // res.json({
-      //   status: 'failed to send the mail',
-      // });
     } else {
       log('Mail Sent Successfully, to see the detials uncomment below log');
       log('Mail sent successfully', info);
-      // res.json({
-      //   status: 'success',
-      // });
     }
   });
 };

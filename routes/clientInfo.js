@@ -43,13 +43,6 @@ router.route('/mailAndUpdate/:id').post((req, res) => {
         .save()
         .then((savedDocument) => {
           res.json('formSubmitted email');
-          // log("req body : ", req.body)
-          // formSubmitted(
-          //           savedDocument.email,
-          //           savedDocument.projectManager,
-          //           savedDocument.projectNameByIT,
-          //           savedDocument._id
-          //   );
         })
         .catch((err) => res.status(400).json('Error: ' + err));
     })
