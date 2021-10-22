@@ -43,13 +43,6 @@ router.route('/mailAndUpdate/:id').post((req, res) => {
         .save()
         .then((savedDocument) => {
           res.json('formSubmitted email');
-          // log("req body : ", req.body)
-          // formSubmitted(
-          //           savedDocument.email,
-          //           savedDocument.projectManager,
-          //           savedDocument.projectNameByIT,
-          //           savedDocument._id
-          //   );
         })
         .catch((err) => res.status(400).json('Error: ' + err));
     })
@@ -224,9 +217,12 @@ router.route('/mailReshare/:id').post((req, res) => {
 router.route('/feebackMail').post((req, res) => {
   try {
     feedbackMail(req.body.feedbackText);
+    res.status(200).send({
+      message: "Success"
+    });
     log('Sharing feedback mail !');
   } catch (err) {
-    res.status(400).json('Error dp: ' + err);
+    res.status(400).send('Error dp: ' + err);
   }
 });
 

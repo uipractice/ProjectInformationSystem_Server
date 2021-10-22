@@ -21,38 +21,6 @@ app.get('/health', (req, res) => {
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// const fileStorageEngine = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './uploadDoc');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + '--' + file.originalname);
-//   },
-// });
-
-
-
-// const upload = multer({ storage: fileStorageEngine });
-
-// app.post('/multipleOld/:id', upload.array('fileName', 50), (req, res) => {
-//   const files = req.files || [];
-//   log('1 FileName : ', req.files[0].originalname);
-//   log('2 Date + FileName : ', req.files[0].filename);
-//   log('3 Path + Date + FileName : ', req.files[0].path);
-//   ClientInfo.findById(req.params.id)
-//     .then((clientInfo) => {
-//       clientInfo.fileName = req.files[0].filename;
-//       clientInfo.pathName = req.files[0].path;
-//       clientInfo
-//         .save()
-//         .then(() => {
-//           res.json('Files Upload is Successful and File path saved to DB');
-//           log(res.data);
-//         })
-//         .catch((err) => res.status(400).json('Error: ' + err));
-//     })
-//     .catch((err) => res.status(400).json('Error: ' + err));
-// });
 
 app.post('/multiple/:id', upload.array('fileName', 50), (req, res) => {
   const files = req.files || [];
@@ -94,16 +62,12 @@ app.post('/multiple/:id', upload.array('fileName', 50), (req, res) => {
             .then(() => {
               res.json('File Upload Successful and saved to DB');
             })
-            .catch((err) => res.status(400).json('Error: ' + err));
+            .catch((error) => res.status(400).json('Error: ' + error));
         }
       });
     }
   });
 });
-
-// app.get("/download", function(req, res){
-//   res.download('./uploadDoc/1626894517317--Habbits.txt', '1626894517317--Habbits.txt');
-// });
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => log(`Server running on port: ${port}`));
