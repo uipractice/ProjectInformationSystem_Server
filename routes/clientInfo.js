@@ -217,9 +217,12 @@ router.route('/mailReshare/:id').post((req, res) => {
 router.route('/feebackMail').post((req, res) => {
   try {
     feedbackMail(req.body.feedbackText);
+    res.status(200).send({
+      message: "Success"
+    });
     log('Sharing feedback mail !');
   } catch (err) {
-    res.status(400).json('Error dp: ' + err);
+    res.status(400).send('Error dp: ' + err);
   }
 });
 
