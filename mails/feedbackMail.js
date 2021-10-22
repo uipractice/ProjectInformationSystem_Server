@@ -22,7 +22,7 @@ const feedbackMail = (feedbackBody) => {
     from: '"Evoke IT Team" <evkappspoc@evoketechnologies.com>', //Evoke IT team email ID
     // cc: "cc email id goes here",
     // bcc: "cc email id goes here",
-    subject: `"Feeback of PIS Applicaion."`,
+    subject: `"Feedback of PIS Application."`,
     html: ` <!DOCTYPE html>
     <html lang="en-IN">
       <head>
