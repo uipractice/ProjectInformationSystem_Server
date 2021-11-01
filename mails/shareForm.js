@@ -116,7 +116,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                               margin-top: 0;
                             "
                           >
-                            Hello ${projectManager}
+                            Hello ${projectManager},
                           </p>
                           <p
                             style="
@@ -127,8 +127,8 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                               font-family: calibri;
                             "
                           >
-                          Before you go up and running with the project ${projectNameByIT}, IT
-                          team requires a few more details to be furnished.
+                          Before we go up and running with the project ${projectNameByIT}, Evoke IT
+                          team requires you to share the mandatory project details.
                           </p>
                           <p
                             style="
@@ -140,7 +140,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                               margin-bottom: 0;
                             "
                           >
-                            Please fill in the form and get, set, go!
+                            Please fill in the form, and get, set, go!
                           </p>
                         </div>
                       </td>
@@ -176,7 +176,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                                   href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                                   style="color: #ffffff; text-decoration: none"
                                   ><span style="color: #ffffff"
-                                    >SHARE PROJECT DETAIL</span
+                                    >Share Project Details</span
                                   ></a
                                 >
                               </td>
@@ -216,10 +216,10 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      log('Filed to send, to see the detials uncomment below log');
+      log('Failed to send, to see the details uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail Sent Successfully, to see the details uncomment below log');
       log('Mail sent successfully', info);
     }
   });

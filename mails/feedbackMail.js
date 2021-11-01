@@ -115,7 +115,7 @@ const feedbackMail = (feedbackBody) => {
                           margin-top: 0;
                         "
                       >
-                        Hello Evoke UI Team
+                        Hello EVOKE UI Team,
                       </p>
                       <p
                         style="
@@ -127,7 +127,7 @@ const feedbackMail = (feedbackBody) => {
                           margin-bottom: 0;
                         "
                       >
-                       ${feedbackBody}
+                       ${feedbackBody}!
                       </p>
                         </div>
                       </td>
@@ -163,10 +163,10 @@ const feedbackMail = (feedbackBody) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      log('Filed to send, to see the detials uncomment below log');
+      log('Failed to send, to see the details uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail Sent Successfully, to see the details uncomment below log');
       log('Mail sent successfully', info);
     }
   });

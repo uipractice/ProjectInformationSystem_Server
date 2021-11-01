@@ -121,7 +121,7 @@ const reShareForm = (
                               margin-top: 0;
                             "
                           >
-                            Hello ${projectManager}
+                            Hello ${projectManager},
                           </p>
                           <p
                             style="
@@ -144,8 +144,8 @@ const reShareForm = (
                               margin-bottom: 0;
                             "
                           >
-                          A few more details about the project are missing. Please input
-                          the missing points in the form again.
+                          We find that a few more project details are missing in the form you
+                          have shared. We request you to fill in the form with all the details.
                           </p>
                         </div>
                       </td>
@@ -181,7 +181,7 @@ const reShareForm = (
                                   href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                                   style="color: #ffffff; text-decoration: none"
                                   ><span style="color: #ffffff"
-                                    >SHARE PROJECT DETAIL</span
+                                    >Share Project Details</span
                                   ></a
                                 >
                               </td>
@@ -221,10 +221,10 @@ const reShareForm = (
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      log('Filed to send, to see the detials uncomment below log');
+      log('Failed to send, to see the details uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail Sent Successfully, to see the details uncomment below log');
       log('Mail sent successfully', info);
     }
   });
