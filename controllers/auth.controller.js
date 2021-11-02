@@ -7,7 +7,7 @@ const config = require("../config/auth.config");
         User.findOne({userName:req.body.userName})
         .then((user)=>{
             if (!user) {
-                res.status(200).send({accessToken: null, message: "Invalid Username" });
+                res.status(200).send({accessToken: null, message: "Invalid username or password!" });
                 return;
               }
             var passwordIsValid = bcrypt.compareSync(
@@ -18,7 +18,7 @@ const config = require("../config/auth.config");
               if (!passwordIsValid) {
                 return res.status(200).send({
                   accessToken: null,
-                  message: "Invalid Password!"
+                  message: "Invalid username or Password!"
                 });
               }
               var token = jwt.sign({ id: user.id }, config.secret, {
