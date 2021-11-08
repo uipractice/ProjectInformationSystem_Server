@@ -115,7 +115,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                               margin-top: 0;
                             "
                           >
-                            Hello ${projectManager}
+                            Hello ${projectManager},
                           </p>
                           <p
                             style="
@@ -126,9 +126,9 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                               font-family: calibri;
                             "
                           >
-                          We thought of greeting you once again because we have not heard
-                        from you. Please fill in the form so we could gather information
-                        about your project.
+                          We know you are busy. We would like to remind you about filling
+                          in the project details gently. Your coorperation helps us manage IT
+                          resources effectively.
                           </p>
                         </div>
                       </td>
@@ -164,7 +164,7 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
                                   href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                                   style="color: #ffffff; text-decoration: none"
                                   ><span style="color: #ffffff"
-                                    >SHARE PROJECT DETAIL</span
+                                    >Share Project Details</span
                                   ></a
                                 >
                               </td>
@@ -205,10 +205,10 @@ const reminderMail = (email, projectManager, projectNameByIT, mongoID) => {
   // Step 3
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      log('Filed to send, to see the detials uncomment below log');
+      log('Failed to send, to see the details uncomment below log');
       log('Error occured in sending the mail : ', err);
     } else {
-      log('Mail Sent Successfully, to see the detials uncomment below log');
+      log('Mail Sent Successfully, to see the details uncomment below log');
       log('Mail sent successfully', info);
     }
   });
