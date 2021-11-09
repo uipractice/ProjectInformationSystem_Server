@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const config = require('../config/auth.config');
+const log = console.log;
 
 exports.users = (req, res) => {
   User.find()
@@ -18,7 +19,7 @@ exports.createUser = (req, res) => {
       } else {
         const newUser = new User(req.body);
         newUser.save().then((row) => {
-          return res.status(200).send({ message: 'user added successfully' });
+          return res.status(200).send({ message: 'user added successfully', status:'success' });
         });
       }
     })
