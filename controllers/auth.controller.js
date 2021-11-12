@@ -10,12 +10,7 @@ const config = require("../config/auth.config");
                 res.status(200).send({accessToken: null, message: "Invalid user" });
                 return;
               }
-            var passwordIsValid = bcrypt.compareSync(
-                req.body.password,
-                user.password
-              );
-        
-              if (!passwordIsValid) {
+              if (req.body.password!== user.password) {
                 return res.status(200).send({
                   accessToken: null,
                   message: "Invalid Password!"
@@ -25,8 +20,7 @@ const config = require("../config/auth.config");
                 expiresIn: 86400 // 24 hours
               });
               res.status(200).send({
-                id: user._id,
-                userName: user.userName,
+                data: user,
                 accessToken: token
               });
         })
