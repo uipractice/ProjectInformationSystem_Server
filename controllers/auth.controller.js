@@ -20,7 +20,7 @@ const config = require("../config/auth.config");
                 expiresIn: 86400 // 24 hours
               });
               res.status(200).send({
-                data: user,
+                user,
                 accessToken: token
               });
         })
