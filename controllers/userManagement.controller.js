@@ -24,7 +24,7 @@ exports.createUser = (req, res) => {
       }
     })
     .catch((err) => {
-        return res.status(500).send({ message: 'internal server error' });;
+        return res.status(500).send({ message: 'internal server error' });
     });
 };
 
@@ -43,7 +43,7 @@ exports.deleteUser = (req, res) => {
         new: true,
       })
         .then((user)=>{
-            return res.status(200).send({ message: 'user updated successfully' });
+            return res.status(200).send({ message: 'user updated successfully', status: 'success' });
         })
       .catch((err) => {
           return res.status(500).send({ message: 'internal server error' });;
