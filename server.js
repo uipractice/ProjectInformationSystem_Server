@@ -9,6 +9,7 @@ let ClientInfo = require('./models/clientInfo.model');
 const log = console.log;
 const clientInfoRouter = require('./routes/clientInfo');
 const authenticationRouter=require('./routes/auth.routes')
+const userManagementRouter=require('./routes/userManagement.routes')
 
 const app = express();
 app.use(cors());
@@ -81,4 +82,5 @@ mongoose.connect(uri, {
 mongoose.connection.once('open', () => log('MongoDB Connection is successful'));
 
 app.use('/clientInfo', clientInfoRouter);
-app.use('/auth',authenticationRouter)
+app.use('/auth',authenticationRouter);
+app.use('/users',userManagementRouter)
