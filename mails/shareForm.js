@@ -173,7 +173,7 @@ const shareForm = (email, projectManager, projectNameByIT, mongoID) => {
                             <tr>
                               <td align="center">
                                 <a
-                                  href="${process.env.REACT_APP_BASE_URL}/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
+                                  href="test/client-form/${mongoID}" target="_blank" title="Click to Open the Form"
                                   style="color: #ffffff; text-decoration: none"
                                   ><span style="color: #ffffff"
                                     >Share Project Details</span
