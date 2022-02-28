@@ -3,15 +3,19 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-  userName:{type:String},
-  password:{type:String},
-  emailId:{type:String},
-  role:{type:String},
-  team:{type:String},
-  contactNumber:{type:Number},
-  status:{type:String},
+    userId: {type:String},
+    password: {type:String},
+    userName:{type:String},
+    contactNumber: {type:String},
+    practice:{type:String},
+    practiceName: {type:String},
+    pset: {type:Array},
+    status: {type:String},
+    role: {type:String},
+    createdAt: {type:Date},
+    updatedAt: {type:Date},
   },
-  { timestamps: true }
+{ timestamps: true }
 );
 
 const User = mongoose.model('User', userSchema);

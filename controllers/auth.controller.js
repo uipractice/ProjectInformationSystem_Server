@@ -4,7 +4,7 @@ const User =require("../models/user.model");
 const config = require("../config/auth.config");
 
  exports.login=(req,res)=>{
-        User.findOne({userName:req.body.userName})
+        User.findOne({userId:req.body.userName})
         .then((user)=>{
             if (!user) {
                 res.status(200).send({accessToken: null, message: "Invalid username or password!" });
