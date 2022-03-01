@@ -12,7 +12,7 @@ exports.users = (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 };
 exports.createUser = (req, res) => {
-  User.find({ emailId: req.body.emailId })
+  User.find({ userId: req.body.userId })
     .then((user) => {
       if (user.length > 0) {
         return res.send({ message: 'user already exists!' });
